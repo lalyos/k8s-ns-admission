@@ -1,6 +1,8 @@
 
 [![Docker Automated build](https://img.shields.io/docker/automated/lalyos/k8s-ns-admission.svg)](https://hub.docker.com/r/lalyos/k8s-ns-admission/)
 
+[![Docker Automated build](https://img.shields.io/docker/automated/lalyos/k8s-ns-admission-deploy.svg)](https://hub.docker.com/r/lalyos/k8s-ns-admission-deploy/)
+
 # Namespace Validaing Admission Webhook
 
 This is a Validating Admission Webhook for k8s. It is validating namespaces create/delete operations, checking name prefixes. The intent is to let the `user1` ServiceAccount be able to create/delete any namespace with names starting with `user1-`
@@ -9,7 +11,7 @@ This is a Validating Admission Webhook for k8s. It is validating namespaces crea
 
 To deploy the validating admission webhook, just run this one-liner:
 ```
-kubectl apply -f https://github.com/lalyos/k8s-ns-admission/blob/master/deploy-webhook-job.yaml 
+kubectl apply -f https://raw.githubusercontent.com/lalyos/k8s-ns-admission/master/deploy-webhook-job.yaml 
 ```
 
 Most admission webhook examples requires you to do a lot of manual steps regarding certificate creation. That is all taken care by the job:
