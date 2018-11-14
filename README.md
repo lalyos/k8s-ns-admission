@@ -17,5 +17,8 @@ Then you might think, lets just give them 1 single predefined ns to create, like
 
 See (Dynamic Admission Control docs:)[https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/]
 
-## Origin
-Code started from the: (official k8s webhook test)[https://github.com/kubernetes/kubernetes/tree/v1.10.0-beta.1/test/images/webhook]
+## References
+
+code is proudly stolen from: 
+- (official k8s webhook test)[https://github.com/kubernetes/kubernetes/tree/v1.10.0-beta.1/test/images/webhook]
+- (istio cert-gen script)[https://github.com/istio/istio/raw/release-0.7/install/kubernetes/webhook-create-signed-cert.sh]
