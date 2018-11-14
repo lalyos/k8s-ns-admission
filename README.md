@@ -5,6 +5,23 @@
 
 This is a Validating Admission Webhook for k8s. It is validating namespaces create/delete operations, checking name prefixes. The intent is to let the `user1` ServiceAccount be able to create/delete any namespace with names starting with `user1-`
 
+## Usage
+
+To deploy the validating admission webhook, just run this one-liner:
+```
+kubectl apply -f https://github.com/lalyos/k8s-ns-admission/blob/master/deploy-webhook-job.yaml 
+```
+
+Most admission webhook examples requires you to do a lot of manual steps regarding certificate creation. That is all taken care by the job:
+
+- creates a service account to give certificate relatades access to the job
+- creates a certificate req for the webhook's https endpoint
+- let api-server sign the csr
+- save the cert/key into a secret
+- create a svc/deployment for the webhook (using the generated cert as mounted volume)
+- creates the ValidatingWebhookConfiguration
+- tests the webhook by creating and deleteing a ns "delme"
+
 ## tl;dr
 
 For k8s workshops you might want to provide isolated workspace for each participant.
@@ -14,7 +31,6 @@ But how can they learn to work with namespaces? We might want to give access to 
 
 Then you might think, lets just give them 1 single predefined ns to create, like `user1-play`. Therefoe lets create a ClusterRole which gives access to namespaces resources restricted by `resourceNames: ["user1-play"]`. Unfortunately its not possible, as there is a sidenote in [RBAC docs](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-resources)
 > Notably, if resourceNames are set, then the verb must not be list, watch, create, or delete
-
 
 ## References
 

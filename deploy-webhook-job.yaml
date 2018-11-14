@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cert
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-cert
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: cert
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: webhook-depl-job
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      serviceAccountName: cert
+      containers:
+      - image: eu.gcr.io/involuted-smile-221511/certgen
+        name: webhook-depl-job
+        resources: {}
+      restartPolicy: Never

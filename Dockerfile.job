@@ -1,0 +1,8 @@
+FROM lalyos/k8s-workshop
+
+RUN apt-get install -y gettext
+
+ADD https://raw.githubusercontent.com/istio/istio/release-0.7/install/kubernetes/webhook-create-signed-cert.sh /
+RUN chmod +x webhook-create-signed-cert.sh
+ADD deploy-webhook.sh /
+ENTRYPOINT ["/deploy-webhook.sh"]
