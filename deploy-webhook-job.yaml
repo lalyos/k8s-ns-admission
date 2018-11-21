@@ -27,7 +27,9 @@ spec:
     spec:
       serviceAccountName: cert
       containers:
-      - image: lalyos/k8s-ns-admission-deploy
+      - image: lalyos/k8s-ns-admission
+        command:
+          - /deploy-webhook.sh
         name: webhook-depl-job
         resources: {}
       restartPolicy: Never
