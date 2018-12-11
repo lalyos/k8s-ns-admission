@@ -116,11 +116,15 @@ func admitNamespace(ar v1beta1.AdmissionReview) *v1beta1.AdmissionResponse {
 		glog.Infof("### objname (Request.Object.Raw): %#v", objName)
 	}
 
-	if resource == "namespaces" && strings.HasPrefix(user, "system:serviceaccount:default:sa-user") {
-		username := strings.TrimPrefix(user, "system:serviceaccount:default:sa-")
+	glog.Infoln("checking for SA")
+	if resource == "namespaces" &&
+		strings.HasPrefix(user, "system:serviceaccount:") &&
+		strings.Contains(user, ":sa-user") {
+		userParts := strings.Split(user, ":")
+		username := strings.TrimPrefix(userParts[3], "sa-")
 		prefix := username + "-"
 		allowed := strings.HasPrefix(objName, prefix)
-		glog.Infof("user: %s, ns:%s allowed:%v", username, objName, allowed)
+		glog.Infof("[ALLOWED] user: %s, ns:%s allowed:%v", username, objName, allowed)
 		if !allowed {
 			resp.Allowed = false
 			resp.Result = &metav1.Status{Message: "namespace prefix must match 'userX-'"}
