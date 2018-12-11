@@ -29,7 +29,7 @@ spec:
         run: workshopnamespacevalidator
     spec:
       containers:
-      - image: eu.gcr.io/involuted-smile-221511/webhook
+      - image: lalyos/k8s-ns-admission
         name: workshopnamespacevalidator
         args:
             - -tls-cert-file=/etc/webhook/certs/cert.pem
